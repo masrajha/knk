@@ -31,6 +31,7 @@ void *Sum(void *arg)	//Sum(0), Sum(1), Sum(2), Sum(3)
 												//compare to the serial summation.
 		sum+=i;
     auto end = std::chrono::high_resolution_clock::now();
+    // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     
     // printf("Thread ID: %d, range=%ld, sum=%ld start:%ld end:%ld dif:%f\n", myid, range, sum, start, end, time_dif);
@@ -59,9 +60,9 @@ int main()
     auto end = std::chrono::high_resolution_clock::now();
     auto paralel_duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     double paralel_time = paralel_duration.count()/1000000.0;
-    // std::cout << "Paralel time summary: start=" << start.time_since_epoch().count()
-    //           << ", end=" << end.time_since_epoch().count()
-    //           << ", time=" << paralel_time << " micro seconds" << std::endl;
+    std::cout << "Paralel time summary: start=" << start.time_since_epoch().count()
+              << ", end=" << end.time_since_epoch().count()
+              << ", time=" << paralel_time << " micro seconds" << std::endl;
     
     start = std::chrono::high_resolution_clock::now();
     unsigned long int serial_sum =0;
@@ -72,15 +73,13 @@ int main()
     auto serial_duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     double serial_time = serial_duration.count()/1000000.0;              
             
-    // std::cout << "Serial time summary: start=" << start.time_since_epoch().count()
-    //           << ", end=" << end.time_since_epoch().count()
-    //           << ", time=" << serial_time<< " micro seconds" << std::endl;
+    std::cout << "Serial time summary: start=" << start.time_since_epoch().count()
+              << ", end=" << end.time_since_epoch().count()
+              << ", time=" << serial_time<< " micro seconds" << std::endl;
 
     // pthread_join(tid1,NULL);
 	// pthread_join(tid2,NULL);
-
-    std::cout<<(int) num_thread<<","<< (long long) num_sum<<","<<(double) paralel_time<<","<<(double) serial_time <<std::endl;
-    // printf("%d,%ld,%f,%f\n",num_thread,num_sum,paralel_time,serial_time);
+    
     pthread_exit(NULL);
     return 0; 
 }
