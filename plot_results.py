@@ -369,8 +369,8 @@ def save_cleaned_data(df, filename='cleaned_results.csv'):
 
 def main():
     """Main function"""
-    # filename = 'results.csv'
-    filename = 'benchmark_results.csv'  # Ganti dengan nama file yang sesuai
+    filename = 'results.csv'
+    # filename = 'benchmark_results.csv'  # Ganti dengan nama file yang sesuai
     
     # Read data
     df = read_and_process_data(filename)

@@ -30,4 +30,6 @@ echo.
 :: Display the results
 type "%output_file%"
 
+python.exe .\plot_results.py  
+
 endlocal
