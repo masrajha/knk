@@ -5,7 +5,7 @@ set "output_file=results_2.csv"
 set "program=program.exe"
 
 :: Create CSV file with header (without trailing spaces)
-echo size,nt2_time,nt4_time,nt5_time,nt8_time,nt10_time,serial_time> "%output_file%"
+echo size,nt2_time,nt4_time,nt5_time,nt8_time,serial_time> "%output_file%"
 
 :: Define threads and sizes
 :: set "threads=1 2 4 8"

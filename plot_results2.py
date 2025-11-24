@@ -57,7 +57,7 @@ def read_and_process_data(filename):
         serial_time = row['serial_time']
         
         # Untuk setiap konfigurasi thread
-        for thread_col in [ 'nt2_time', 'nt4_time','nt5_time', 'nt8_time','nt10_time']:
+        for thread_col in [ 'nt2_time', 'nt4_time','nt5_time', 'nt8_time']:
             if thread_col in row:
                 # Ekstrak jumlah thread dari nama kolom
                 threads = int(thread_col.replace('nt', '').replace('_time', ''))

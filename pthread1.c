@@ -102,7 +102,7 @@ int main(int argc, char* argv[]){
         printf("%d,%ld,%f,%f\n",num_thread,num_sum,paralel_time,serial_time);
     } else if(argc ==2){
         vector <double> paralel_times;
-        int thread_counts[] = {2,4,5,8,10};
+        int thread_counts[] = {2,4,5,8};
         for (int num_thread : thread_counts){
             double paralel_time = run_paralel(num_thread, num_sum);
             paralel_times.push_back(paralel_time);
