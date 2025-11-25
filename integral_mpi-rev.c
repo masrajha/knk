@@ -109,12 +109,14 @@ int main(int argc, char *argv[])
       {
             end = clock();
             duration = (end - start)/(CLOCKS_PER_SEC*1.0);
-            // printf("The total integral result = %f\n", result);
-            // printf("Total time taken = %f seconds\n", duration);
-            // printf("Method used: %s\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive");
+            
+            //print result to console
+            printf("The total integral result = %f\n", result);
+            printf("Total time taken = %f seconds\n", duration);
+            printf("Method used: %s\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive");
             
             //open to print as row data
-            printf("%s,%d,%f,%f\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive", p, result, duration);
+            // printf("%s,%d,%f,%f\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive", p, result, duration);
       }
       MPI_Finalize(); /* let MPI finish up ... */
 
