@@ -1,0 +1,13 @@
+method,np,result,duration
+MPI_Reduce,1,1.000000,0.002942
+Send-Receive-Vector,1,1.000000,0.003678
+MPI_Reduce,2,1.000000,0.002302
+Send-Receive-Vector,2,1.000000,0.003036
+MPI_Reduce,3,0.999993,0.001466
+Send-Receive-Vector,3,0.999993,0.002140
+MPI_Reduce,4,1.000000,0.003241
+Send-Receive-Vector,4,1.000000,0.003963
+MPI_Reduce,5,1.000000,0.003186
+Send-Receive-Vector,5,1.000000,0.004906
+MPI_Reduce,6,0.999965,0.001309
+Send-Receive-Vector,6,0.999965,0.005517
