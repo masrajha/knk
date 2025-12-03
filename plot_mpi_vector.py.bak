@@ -153,17 +153,10 @@ else:
         print("Data setelah perhitungan speedup (dalam MB):")
         print(send_receive_data[['np', 'data_size_mb', 'duration', 'speedup_vs_np1']])
         
-        # BUAT FIGURE DENGAN 3 SUBPLOT
-        # fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(24, 8))
-        
-        
-        fig = plt.figure(figsize=(20, 12))
+        # BUAT FIGURE DENGAN 2 SUBPLOT
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
         fig.suptitle('Send-Receive-Vector: Speedup vs Data Size Analysis\n(Baseline: np=1, duration=0.349226s)', 
-                    fontsize=16, fontweight='bold')
-
-        ax1 = fig.add_subplot(2, 2, 1)  # Baris 1, Kolom 1 - Line plot
-        ax2 = fig.add_subplot(2, 2, 2)  # Baris 1, Kolom 2 - Scatter plot  
-        ax3 = fig.add_subplot(2, 1, 2)  # Baris 2, Kolom 1-2 (span 2 kolom) - Bar plot
+                     fontsize=16, fontweight='bold')
         
         # SUBPLOT 1: Line plot dengan anotasi detail
         ax1.plot(send_receive_data['data_size_mb'], send_receive_data['speedup_vs_np1'], 
@@ -221,41 +214,6 @@ else:
         
         # Format sumbu x untuk MB (tanpa scientific notation)
         ax2.ticklabel_format(style='plain', axis='x')
-        
-        # SUBPLOT 3: Bar plot durasi vs data size
-        # Buat array posisi untuk setiap bar
-        x_pos = np.arange(len(send_receive_data))
-        
-        # Buat bar plot dengan warna berbeda untuk setiap np
-        colors = plt.cm.viridis(np.linspace(0, 1, len(send_receive_data)))
-        bars = ax3.bar(x_pos, send_receive_data['duration'], color=colors, alpha=0.7)
-        
-        # Konfigurasi subplot
-        ax3.set_xlabel('Data Size (MB)', fontsize=12, fontweight='bold')
-        ax3.set_ylabel('Duration (seconds)', fontsize=12, fontweight='bold')
-        ax3.set_title('Bar Plot: Duration vs Data Size', fontsize=14, fontweight='bold')
-        ax3.set_xticks(x_pos)
-        
-        # Format label sumbu x dengan data size dalam MB
-        data_size_labels = [f"{size:.2f} MB\nnp={np_val}" for size, np_val in 
-                          zip(send_receive_data['data_size_mb'], send_receive_data['np'])]
-        ax3.set_xticklabels(data_size_labels, rotation=45, ha='right')
-        
-        # Tambahkan nilai di atas setiap bar
-        for i, (bar, duration) in enumerate(zip(bars, send_receive_data['duration'])):
-            height = bar.get_height()
-            ax3.text(bar.get_x() + bar.get_width()/2., height + 0.001,
-                    f'{duration:.4f}s', ha='center', va='bottom', fontsize=9, fontweight='bold')
-        
-        # Tambahkan grid
-        ax3.grid(True, alpha=0.3, axis='y')
-        
-        # Tambahkan colorbar untuk konsistensi
-        norm = plt.Normalize(send_receive_data['np'].min(), send_receive_data['np'].max())
-        sm = plt.cm.ScalarMappable(cmap='viridis', norm=norm)
-        sm.set_array([])
-        cbar = plt.colorbar(sm, ax=ax3)
-        cbar.set_label('Number of Processes (np)', fontsize=10, fontweight='bold')
         
         plt.tight_layout()
         plt.savefig('speedup_vs_data_size_combined_mb.png', dpi=300, bbox_inches='tight')

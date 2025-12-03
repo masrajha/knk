@@ -13,6 +13,8 @@ double fct(double x)
 double integral(double a, int n, double h);
 
 int main(int argc, char *argv[])
+
+
 {
       /***********************************************************************
        *                                                                     *
@@ -112,6 +114,7 @@ int main(int argc, char *argv[])
             // printf("The total integral result = %f\n", result);
             // printf("Total time taken = %f seconds\n", duration);
             // printf("Method used: %s\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive");
+            
             
             //open to print as row data
             printf("%s,%d,%f,%f\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive", p, result, duration);

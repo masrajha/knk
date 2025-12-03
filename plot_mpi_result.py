@@ -13,33 +13,32 @@ df = pd.read_csv('hasil_mpi.csv')
 print("Data yang dibaca:")
 print(df.head(12))
 
-# Buat plot perbandingan running time
-plt.figure(figsize=(12, 8))
+# Buat figure dengan 2 subplot horizontal
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
+# Subplot 1 (kiri): Line plot dengan annotasi
 # Plot untuk MPI_Reduce
 mpi_reduce_data = df[df['method'] == 'MPI_Reduce']
-plt.plot(mpi_reduce_data['np'], mpi_reduce_data['duration'], 
+axes[0].plot(mpi_reduce_data['np'], mpi_reduce_data['duration'], 
          marker='o', linewidth=2, markersize=8, label='MPI_Reduce')
 
 # Plot untuk Send-Receive
 send_receive_data = df[df['method'] == 'Send-Receive']
-plt.plot(send_receive_data['np'], send_receive_data['duration'], 
+axes[0].plot(send_receive_data['np'], send_receive_data['duration'], 
          marker='s', linewidth=2, markersize=8, label='Send-Receive')
 
-# Konfigurasi plot
-plt.xlabel('Number of Processes (np)', fontsize=12, fontweight='bold')
-plt.ylabel('Duration (seconds)', fontsize=12, fontweight='bold')
-plt.title('Perbandingan Running Time MPI Methods\nBerdasarkan Number of Processes', 
+# Konfigurasi subplot kiri
+axes[0].set_xlabel('Number of Processes (np)', fontsize=12, fontweight='bold')
+axes[0].set_ylabel('Duration (seconds)', fontsize=12, fontweight='bold')
+axes[0].set_title('Perbandingan Running Time MPI Methods\nBerdasarkan Number of Processes', 
           fontsize=14, fontweight='bold')
-plt.legend(fontsize=11)
-plt.grid(True, alpha=0.3)
-
-# Set ticks untuk sumbu x (karena np dari 1-6)
-plt.xticks(range(1, 7))
+axes[0].legend(fontsize=11)
+axes[0].grid(True, alpha=0.3)
+axes[0].set_xticks(range(1, 7))
 
 # Tambahkan annotasi nilai pada setiap titik
 for i, row in mpi_reduce_data.iterrows():
-    plt.annotate(f"{row['duration']:.4f}", 
+    axes[0].annotate(f"{row['duration']:.4f}", 
                 (row['np'], row['duration']), 
                 textcoords="offset points", 
                 xytext=(0,10), 
@@ -47,39 +46,22 @@ for i, row in mpi_reduce_data.iterrows():
                 fontsize=8)
 
 for i, row in send_receive_data.iterrows():
-    plt.annotate(f"{row['duration']:.4f}", 
+    axes[0].annotate(f"{row['duration']:.4f}", 
                 (row['np'], row['duration']), 
                 textcoords="offset points", 
                 xytext=(0,10), 
                 ha='center', 
                 fontsize=8)
 
-plt.tight_layout()
-plt.show()
+# Subplot 2 (kanan): Bar plot
+sns.barplot(data=df, x='np', y='duration', hue='method', ax=axes[1])
 
-# Buat plot alternatif menggunakan seaborn untuk visualisasi yang berbeda
-plt.figure(figsize=(12, 8))
-sns.lineplot(data=df, x='np', y='duration', hue='method', 
-             marker='o', markersize=8, linewidth=2.5)
-
-plt.xlabel('Number of Processes (np)', fontsize=12, fontweight='bold')
-plt.ylabel('Duration (seconds)', fontsize=12, fontweight='bold')
-plt.title('Perbandingan Running Time MPI Methods\n(Bentuk Alternatif)', 
+axes[1].set_xlabel('Number of Processes (np)', fontsize=12, fontweight='bold')
+axes[1].set_ylabel('Duration (seconds)', fontsize=12, fontweight='bold')
+axes[1].set_title('Perbandingan Running Time MPI Methods\n(Bar Chart)', 
           fontsize=14, fontweight='bold')
-plt.grid(True, alpha=0.3)
-plt.xticks(range(1, 7))
-plt.tight_layout()
-plt.show()
+axes[1].legend(title='Method')
 
-# Buat bar plot untuk perbandingan yang lebih jelas
-plt.figure(figsize=(12, 8))
-sns.barplot(data=df, x='np', y='duration', hue='method')
-
-plt.xlabel('Number of Processes (np)', fontsize=12, fontweight='bold')
-plt.ylabel('Duration (seconds)', fontsize=12, fontweight='bold')
-plt.title('Perbandingan Running Time MPI Methods\n(Bar Chart)', 
-          fontsize=14, fontweight='bold')
-plt.legend(title='Method')
 plt.tight_layout()
 plt.show()
 

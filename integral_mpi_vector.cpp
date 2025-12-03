@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     pi = acos(-1.0);
     a = 0.;
     b = pi * 1. / 2.;
-    n = 100000;  // Reduced for vector communication demo
+    n = 10000000;  // Reduced for vector communication demo
 
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &myid);
@@ -133,9 +133,9 @@ int main(int argc, char *argv[])
         
         // // For data analysis
         // printf("Processes: %d, Elements per process: %ld\n", p, num);
-
+        // printf("Data size send per process: %lu bytes\n",(argc>=2 && argv[1][0]=='r')? sizeof(double) : sizeof(double) * num);
         //Print as row data
-        printf("%s,%d,%f,%f\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive-Vector", p, result, duration);
+        printf("%s,%d,%f,%f,%ld\n", (argc >= 2 && argv[1][0] == 'r') ? "MPI_Reduce" : "Send-Receive-Vector", p, result, duration,(argc>=2 && argv[1][0]=='r')? sizeof(double) : sizeof(double) * num);
     }
     
     MPI_Finalize();

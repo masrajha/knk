@@ -4,7 +4,7 @@
 output_file="hasil_mpi_vector.csv"
 
 # Tulis header ke file CSV
-echo "method,np,result,duration,data_size" > "$output_file"
+echo "method,np,result,duration" > "$output_file"
 
 # Compile program MPI jika diperlukan
 echo "Compiling program MPI..."
@@ -28,7 +28,7 @@ for np in {1..6}; do
         output=$(mpirun -np "$np" integral_vector "$method" 2>/dev/null)
         
         # Ekstrak bagian yang diperlukan dari output
-        # Format: [Method],[NP],[Result],[Duration],[Data_Size]
+        # Format: [Method],[NP],[Result],[Duration]
         hasil=$(echo "$output" | grep -E "(MPI_Reduce|Send-Receive-Vector)" | head -1)
         
         # Simpan ke file CSV jika hasil tidak kosong
@@ -164,147 +164,6 @@ plt.tight_layout()
 plt.savefig('mpi_vector_detailed.png', dpi=300, bbox_inches='tight')
 plt.show()
 
-# PLOT BARU: Speedup berdasarkan Data Size untuk Send-Receive-Vector - GABUNGAN (dalam MB)
-print("Membuat plot Speedup vs Data Size (gabungan) dalam satuan MB...")
-
-# Filter data hanya untuk Send-Receive method
-send_receive_data = df[df['method'] == 'Send-Receive'].copy()
-print(f"Jumlah data Send-Receive: {len(send_receive_data)}")
-
-# Pastikan ada data yang tersedia
-if len(send_receive_data) == 0:
-    print("ERROR: Tidak ada data Send-Receive yang ditemukan!")
-else:
-    # Dapatkan baseline duration dari np=1
-    baseline_data = send_receive_data[send_receive_data['np'] == 1]
-    if len(baseline_data) == 0:
-        print("ERROR: Tidak ditemukan baseline np=1!")
-    else:
-        baseline_duration = baseline_data['duration'].values[0]
-        baseline_data_size = baseline_data['data_size'].values[0]
-        
-        # Konversi baseline data size ke MB
-        baseline_data_size_mb = baseline_data_size / (1024 * 1024)
-        
-        print(f"Baseline - np=1: duration={baseline_duration:.6f}s, data_size={baseline_data_size_mb:.2f} MB")
-        
-        # Hitung speedup relatif terhadap np=1
-        send_receive_data['speedup_vs_np1'] = baseline_duration / send_receive_data['duration']
-        
-        # Konversi data_size dari bytes ke MB
-        send_receive_data['data_size_mb'] = send_receive_data['data_size'] / (1024 * 1024)
-        
-        # Urutkan berdasarkan data_size untuk plot yang lebih rapi
-        send_receive_data = send_receive_data.sort_values('data_size_mb')
-        
-        print("Data setelah perhitungan speedup (dalam MB):")
-        print(send_receive_data[['np', 'data_size_mb', 'duration', 'speedup_vs_np1']])
-        
-        # BUAT FIGURE DENGAN 2 SUBPLOT
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
-        fig.suptitle('Send-Receive-Vector: Speedup vs Data Size Analysis\n(Baseline: np=1, duration=0.349226s)', 
-                     fontsize=16, fontweight='bold')
-        
-        # SUBPLOT 1: Line plot dengan anotasi detail
-        ax1.plot(send_receive_data['data_size_mb'], send_receive_data['speedup_vs_np1'], 
-                 marker='o', linewidth=3, markersize=10, color='green', 
-                 label='Send-Receive-Vector', linestyle='-')
-        
-        # Tambahkan garis baseline (speedup = 1)
-        ax1.axhline(y=1, color='red', linestyle='--', alpha=0.7, linewidth=2, label='Baseline (np=1)')
-        
-        # Anotasi setiap titik dengan nilai np dan speedup
-        for i, row in send_receive_data.iterrows():
-            ax1.annotate(f"np={row['np']}\n{row['speedup_vs_np1']:.2f}x", 
-                        (row['data_size_mb'], row['speedup_vs_np1']), 
-                        textcoords="offset points", 
-                        xytext=(10,10), 
-                        ha='left', 
-                        fontsize=9,
-                        bbox=dict(boxstyle="round,pad=0.3", facecolor="lightblue", alpha=0.7))
-        
-        ax1.set_xlabel('Data Size (MB)', fontsize=12, fontweight='bold')
-        ax1.set_ylabel('Speedup (vs np=1)', fontsize=12, fontweight='bold')
-        ax1.set_title('Line Plot: Speedup Trend', fontsize=14, fontweight='bold')
-        ax1.legend(fontsize=10)
-        ax1.grid(True, alpha=0.3)
-        
-        # Format sumbu x untuk MB (tanpa scientific notation)
-        ax1.ticklabel_format(style='plain', axis='x')
-        
-        # SUBPLOT 2: Scatter plot dengan color coding
-        scatter = ax2.scatter(send_receive_data['data_size_mb'], send_receive_data['speedup_vs_np1'], 
-                             c=send_receive_data['np'], cmap='viridis', s=150, alpha=0.7)
-        
-        # Tambahkan colorbar untuk np
-        cbar = plt.colorbar(scatter, ax=ax2)
-        cbar.set_label('Number of Processes (np)', fontsize=10, fontweight='bold')
-        
-        # Tambahkan garis baseline
-        ax2.axhline(y=1, color='red', linestyle='--', alpha=0.7, linewidth=2, label='Baseline (np=1)')
-        
-        # Anotasi dengan speedup values
-        for i, row in send_receive_data.iterrows():
-            ax2.annotate(f"{row['speedup_vs_np1']:.2f}x", 
-                        (row['data_size_mb'], row['speedup_vs_np1']), 
-                        textcoords="offset points", 
-                        xytext=(5,5), 
-                        ha='center', 
-                        fontsize=10,
-                        fontweight='bold')
-        
-        ax2.set_xlabel('Data Size (MB)', fontsize=12, fontweight='bold')
-        ax2.set_ylabel('Speedup (vs np=1)', fontsize=12, fontweight='bold')
-        ax2.set_title('Scatter Plot: Speedup by Process Count', fontsize=14, fontweight='bold')
-        ax2.legend(fontsize=10)
-        ax2.grid(True, alpha=0.3)
-        
-        # Format sumbu x untuk MB (tanpa scientific notation)
-        ax2.ticklabel_format(style='plain', axis='x')
-        
-        plt.tight_layout()
-        plt.savefig('speedup_vs_data_size_combined_mb.png', dpi=300, bbox_inches='tight')
-        plt.show()
-        
-        # Analisis hasil speedup
-        print("\n" + "="*60)
-        print("ANALISIS SPEEDUP SEND-RECEIVE-VECTOR vs np=1")
-        print("="*60)
-        print(f"Baseline (np=1): {baseline_duration:.6f}s, data_size={baseline_data_size_mb:.2f} MB")
-        print("\nSpeedup Analysis:")
-        for i, row in send_receive_data.iterrows():
-            improvement = (row['speedup_vs_np1'] - 1) * 100
-            status = "FASTER" if row['speedup_vs_np1'] > 1 else "SLOWER"
-            print(f"np={row['np']}: data_size={row['data_size_mb']:.2f} MB, "
-                  f"duration={row['duration']:.6f}s, speedup={row['speedup_vs_np1']:.2f}x "
-                  f"({improvement:+.1f}% {status})")
-        
-        # Cari konfigurasi terbaik
-        best_speedup = send_receive_data.loc[send_receive_data['speedup_vs_np1'].idxmax()]
-        print(f"\nKonfigurasi terbaik: np={best_speedup['np']}, "
-              f"speedup={best_speedup['speedup_vs_np1']:.2f}x, "
-              f"duration={best_speedup['duration']:.6f}s, "
-              f"data_size={best_speedup['data_size_mb']:.2f} MB")
-
-# Analisis hasil speedup   
-print("\n" + "="*60)
-print("ANALISIS SPEEDUP SEND-RECEIVE-VECTOR vs np=1")
-print("="*60)
-print(f"Baseline (np=1): {baseline_duration:.6f}s, data_size={baseline_data_size} bytes")
-print("\nSpeedup Analysis:")
-for i, row in send_receive_data.iterrows():
-    improvement = (row['speedup_vs_np1'] - 1) * 100
-    status = "FASTER" if row['speedup_vs_np1'] > 1 else "SLOWER"
-    print(f"np={row['np']}: data_size={row['data_size']} bytes, "
-          f"duration={row['duration']:.6f}s, speedup={row['speedup_vs_np1']:.2f}x "
-          f"({improvement:+.1f}% {status})")
-
-# Cari konfigurasi terbaik
-best_speedup = send_receive_data.loc[send_receive_data['speedup_vs_np1'].idxmax()]
-print(f"\nKonfigurasi terbaik: np={best_speedup['np']}, "
-      f"speedup={best_speedup['speedup_vs_np1']:.2f}x, "
-      f"duration={best_speedup['duration']:.6f}s")
-
 # Tampilkan statistik deskriptif
 print("\n" + "="*50)
 print("STATISTIK DESKRIPTIF")
@@ -320,10 +179,6 @@ print(speedup_stats)
 print("\nEfficiency per Method:")
 efficiency_stats = df.groupby('method')['efficiency'].describe()
 print(efficiency_stats)
-
-print("\nData Size Statistics:")
-data_size_stats = df.groupby('method')['data_size'].describe()
-print(data_size_stats)
 
 # Simpan data lengkap dengan speedup dan efficiency
 df.to_csv('hasil_mpi_vector_analysis.csv', index=False)
@@ -357,5 +212,3 @@ echo "- hasil_mpi_vector.csv (data mentah)"
 echo "- hasil_mpi_vector_analysis.csv (data analisis lengkap)"
 echo "- mpi_vector_performance.png (plot komprehensif)"
 echo "- mpi_vector_detailed.png (plot detail)"
-echo "- data_size_vs_duration.png (plot data size vs duration)"
-echo "- speedup_vs_data_size.png (plot speedup vs data size)"
