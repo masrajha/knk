@@ -1,6 +1,6 @@
 # **LAPORAN HASIL EKSPERIMEN KOMPLEKSITAS ALGORITMA**
 
-## **SOAL 1: EKSPERIMEN KOMPLEKSITAS ALGORITMA O(log n), O(n), DAN O(n log n)**
+## **TUGAS 1: EKSPERIMEN KOMPLEKSITAS ALGORITMA O(log n), O(n), DAN O(n log n)**
 
 ### **Eksperimen 1: Fungsi Rekursif O(log n)**
 
@@ -103,7 +103,7 @@ Eksperimen ini bertujuan untuk membandingkan performa algoritma dengan kompleksi
 
 ---
 
-## **SOAL 2: EKSPERIMEN KODE PROGRAM REKURSIF DENGAN KOMPLEKSITAS O(n), O(n log n), DAN O(n²)**
+## **TUGAS 2: EKSPERIMEN KODE PROGRAM REKURSIF DENGAN KOMPLEKSITAS O(n), O(n log n), DAN O(n²)**
 
 ### **Eksperimen 3: Algoritma Maximum Subarray Sum**
 
@@ -111,6 +111,7 @@ Eksperimen ini bertujuan untuk membandingkan performa algoritma dengan kompleksi
 Eksperimen ini menganalisis tiga algoritma rekursif untuk menyelesaikan masalah Maximum Subarray Sum dengan kompleksitas berbeda: O(n) (Kadane rekursif), O(n log n) (Divide and Conquer), dan O(n²) (Brute Force rekursif). Tujuan eksperimen adalah memahami bagaimana perbedaan kompleksitas algoritma mempengaruhi waktu eksekusi untuk masalah yang sama. Eksperimen dilakukan dengan berbagai ukuran array dari n=10 hingga n=1000 untuk melihat pola pertumbuhan waktu eksekusi.
 
 #### **2. Skenario Eksperimen**
+- **Kode Program**: [Tugas_2.ipynb](Tugas_2.ipynb)
 - **Algoritma yang diuji**:
   1. `maxSubSum1`: Kadane rekursif - O(n)
   2. `maxSubSum2`: Divide and Conquer - O(n log n)
