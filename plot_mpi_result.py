@@ -63,6 +63,8 @@ axes[1].set_title('Perbandingan Running Time MPI Methods\n(Bar Chart)',
 axes[1].legend(title='Method')
 
 plt.tight_layout()
+plt.savefig('mpi_methods_comparison.png', dpi=300, bbox_inches='tight')
+print("\n✓ Grafik disimpan ke: mpi_methods_comparison.png")
 plt.show()
 
 # Tampilkan statistik deskriptif

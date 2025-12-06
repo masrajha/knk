@@ -528,7 +528,7 @@ Eksperimen ini bertujuan untuk menganalisis dan membandingkan kompleksitas waktu
 
 **Kesimpulan Utama:** Eksperimen berhasil memvalidasi teori kompleksitas waktu dan menunjukkan superioritas Bucket Sort untuk dataset besar, dengan speedup mencapai 1204x pada 20.000 elemen. Hasil visualisasi grafik memberikan pemahaman intuitif tentang perbedaan pola pertumbuhan kedua algoritma.
 
-## **Soal 5: Analisis Parallel Computing - Program Sum dengan PThread**
+## **Tugas 5: Analisis Parallel Computing - Program Sum dengan PThread**
 
 **Kode Program:**
 
@@ -717,3 +717,173 @@ Berdasarkan data, **thread optimal bergantung pada ukuran masalah**:
 
 ### **Kesimpulan**
 Eksperimen berhasil menunjukkan prinsip dasar parallel computing menggunakan PThread. **Paralelisasi efektif ketika workload cukup besar untuk mengatasi overhead thread management**. Untuk aplikasi nyata, perlu dipertimbangkan trade-off antara kompleksitas implementasi, maintainability code, dan gain performance yang diharapkan. Implementasi paralel sederhana seperti penjumlahan dapat mencapai speedup hingga 6.76x dengan 8 threads, mendekati 84.5% dari ideal scaling.
+
+## **Tugas 6: Analisis Performa MPI untuk Program Integral**
+
+### **Pendahuluan**
+Eksperimen ini bertujuan untuk menganalisis performa parallel computing menggunakan MPI (Message Passing Interface) pada program perhitungan integral numerik. Fokus eksperimen adalah membandingkan dua metode komunikasi dalam MPI: **MPI_Reduce** dan **Send-Receive**, baik dalam komunikasi data skalar maupun vektor. Eksperimen juga mengamati pengaruh jumlah proses terhadap waktu eksekusi, speedup, dan efisiensi.
+
+### **Skenario Eksperimen**
+
+#### **1. Program dan Metode**
+- **integral_mpi.c**: Program MPI dengan komunikasi skalar (satu nilai per proses)
+- **integral_mpi_vector.cpp**: Program MPI dengan komunikasi vektor (seluruh hasil vektor per proses)
+- **Metode Komunikasi**: MPI_Reduce vs Send-Receive
+
+#### **2. Konfigurasi Eksperimen**
+- **Jumlah Proses (np)**: 1 sampai 6 proses
+- **Ukuran Masalah**: Integral cos(x) dari 0 hingga π/2 dengan n = 10⁷ (vector) dan 10⁸ (scalar)
+- **Metrik**: Waktu eksekusi, speedup, efisiensi, ukuran data transfer
+
+#### **3. Pipeline Eksperimen**
+```
+run_mpi_all.sh → integral_mpi.c/integral_mpi_vector.cpp → hasil_mpi.csv → plot_*.py → visualisasi
+```
+
+### **Hasil Eksperimen**
+
+#### **Tabel 1: Hasil Komunikasi Skalar (integral_mpi.c)**
+| Method       | np | Duration (s) | Speedup vs np=1 |
+|--------------|----|--------------|-----------------|
+| MPI_Reduce   | 1  | 0.780659     | 1.000x          |
+| Send-Receive | 1  | 0.765280     | 1.000x          |
+| MPI_Reduce   | 2  | 0.421419     | 1.852x          |
+| Send-Receive | 2  | 0.429455     | 1.782x          |
+| MPI_Reduce   | 3  | 0.277538     | 2.813x          |
+| Send-Receive | 3  | 0.275932     | 2.773x          |
+| MPI_Reduce   | 4  | 0.239068     | 3.265x          |
+| Send-Receive | 4  | 0.222675     | 3.437x          |
+| MPI_Reduce   | 5  | 0.210048     | 3.717x          |
+| Send-Receive | 5  | 0.202717     | 3.775x          |
+| MPI_Reduce   | 6  | 0.185583     | **4.207x**      |
+| Send-Receive | 6  | 0.210998     | 3.627x          |
+
+#### **Tabel 2: Hasil Komunikasi Vektor (integral_mpi_vector.cpp)**
+| Method       | np | Duration (s) | Data Size (MB) | Speedup vs np=1 |
+|--------------|----|--------------|----------------|-----------------|
+| MPI_Reduce   | 1  | 0.307253     | 0.000008       | 1.000x          |
+| Send-Receive | 1  | 0.334118     | 76.29          | 1.000x          |
+| MPI_Reduce   | 2  | 0.151751     | 0.000008       | 2.025x          |
+| Send-Receive | 2  | 0.216673     | 38.15          | 1.542x          |
+| MPI_Reduce   | 3  | 0.115812     | 0.000008       | 2.653x          |
+| Send-Receive | 3  | 0.252784     | 25.43          | 1.322x          |
+| MPI_Reduce   | 4  | 0.094803     | 0.000008       | 3.241x          |
+| Send-Receive | 4  | 0.201225     | 19.07          | 1.660x          |
+| MPI_Reduce   | 5  | 0.080348     | 0.000008       | 3.823x          |
+| Send-Receive | 5  | 0.164983     | 15.26          | **2.025x**      |
+| MPI_Reduce   | 6  | 0.078391     | 0.000008       | **3.919x**      |
+| Send-Receive | 6  | 0.218066     | 12.72          | 1.532x          |
+
+### **Analisis Visual dan Interpretasi Grafik**
+
+#### **Grafik 1: mpi_methods_comparison.png (Komunikasi Skalar)**
+![Perbandingan Metode MPI - Komunikasi Skalar](mpi_methods_comparison.png)
+
+**Struktur Grafik:** Grafik ini terdiri dari dua subplot yang menunjukkan perbandingan waktu eksekusi antara metode MPI_Reduce dan Send-Receive untuk komunikasi skalar.
+
+**Subplot Kiri (Line Plot):**
+- **Sumbu X:** Number of Processes (np) dari 1 hingga 6
+- **Sumbu Y:** Duration (seconds) dengan skala linier
+- **Garis Gold:** MPI_Reduce dengan marker lingkaran
+- **Garis Oranye:** Send-Receive dengan marker persegi
+- **Anotasi:** Setiap titik data memiliki nilai waktu yang ditampilkan di atasnya
+
+**Interpretasi:**
+1. **Kesamaan Pola:** Kedua metode menunjukkan pola yang sangat mirip, mengindikasikan bahwa untuk komunikasi skalar (hanya 1 nilai per proses), perbedaan antara Reduce dan Send-Receive minimal.
+2. **Tren Penurunan:** Waktu eksekusi menurun secara konsisten dengan penambahan jumlah proses, menunjukkan paralelisasi yang efektif.
+3. **Performa Terbaik:** MPI_Reduce sedikit lebih cepat pada np=6 (0.185583s vs 0.210998s), memberikan speedup 4.207x vs 3.627x.
+4. **Anomali Kecil:** Pada np=4, Send-Receive sedikit lebih cepat (0.222675s vs 0.239068s), tetapi perbedaan tidak signifikan.
+
+**Subplot Kanan (Bar Chart):**
+- **Batang Berwarna:** Perbandingan side-by-side untuk setiap jumlah proses
+- **Skala Waktu:** Sumbu Y menunjukkan durasi dalam detik
+
+**Interpretasi:**
+1. **Visualisasi Langsung:** Bar chart memudahkan perbandingan langsung antara dua metode untuk setiap konfigurasi.
+2. **Dominasi Konsisten:** Warna biru (MPI_Reduce) dan oranye (Send-Receive) menunjukkan performa yang hampir identik di semua konfigurasi.
+3. **Trend Penurunan:** Tinggi batang berkurang secara konsisten dari kiri ke kanan, mengkonfirmasi manfaat paralelisasi.
+
+#### **Grafik 2: mpi_vector_performance.png (Komunikasi Vektor)**
+![Perbandingan Metode MPI - Komunikasi Vektor](mpi_vector_performance.png)
+
+**Struktur Grafik:** Grafik komprehensif dengan 4 subplot yang menganalisis berbagai aspek performa untuk komunikasi vektor.
+
+**Subplot 1 (Line Plot - Waktu Eksekusi):**
+- **Pola Menarik:** MPI_Reduce (garis biru) menunjukkan penurunan waktu yang dramatis, sementara Send-Receive (garis oranye) memiliki penurunan yang lebih moderat.
+- **Gap yang Melebar:** Perbedaan antara kedua metode meningkat dengan bertambahnya jumlah proses, menunjukkan keunggulan MPI_Reduce untuk komunikasi vektor.
+
+**Subplot 2 (Bar Chart - Waktu Eksekusi):**
+- **Perbedaan Visual yang Jelas:** Batang biru (MPI_Reduce) secara konsisten lebih pendek daripada batang oranye (Send-Receive) untuk semua np > 1.
+- **Efektivitas Paralelisasi:** MPI_Reduce menunjukkan pengurangan waktu hampir 4x dari np=1 ke np=6, sementara Send-Receive hanya sekitar 1.5x.
+
+**Subplot 3 (Speedup Relative):**
+- **MPI_Reduce:** Mencapai speedup hingga 3.919x pada np=6, mendekati scaling ideal
+- **Send-Receive:** Speedup maksimum hanya 2.025x pada np=5, kemudian turun pada np=6
+- **Garis Baseline:** Garis merah putus-putus menunjukkan speedup = 1x (tidak ada improvement)
+
+**Subplot 4 (Parallel Efficiency):**
+- **MPI_Reduce:** Efisiensi tetap tinggi (>65%) bahkan pada np=6
+- **Send-Receive:** Efisiensi turun drastis (<30%) pada np=6, menunjukkan overhead komunikasi yang signifikan
+- **Efisiensi Ideal:** Garis horizontal pada y=1 menunjukkan efisiensi sempurna (100%)
+
+#### **Grafik 3: speedup_vs_data_size_combined_mb.png**
+![Analisis Speedup vs Ukuran Data](speedup_vs_data_size_combined_mb.png)
+
+**Struktur Grafik:** Grafik 3-in-1 yang menganalisis hubungan antara speedup dan ukuran data untuk metode Send-Receive Vector.
+
+**Subplot 1 (Line Plot - Trend Speedup):**
+- **Pola Invers:** Terdapat hubungan terbalik antara ukuran data per proses dan speedup
+- **Titik Optimal:** Speedup maksimum (2.025x) dicapai pada np=5 dengan data 15.26 MB per proses
+- **Anotasi Detail:** Setiap titik menunjukkan konfigurasi np dan nilai speedup
+
+**Subplot 2 (Scatter Plot - Color Coding):**
+- **Color Mapping:** Warna titik bervariasi berdasarkan jumlah proses (viridis colormap)
+- **Cluster Visual:** Titik-titik terbagi dalam kelompok berdasarkan np
+- **Insight:** Konfigurasi dengan np=5 (warna hijau) memberikan kombinasi optimal antara pembagian workload dan overhead
+
+**Subplot 3 (Bar Plot - Duration vs Data Size):**
+- **Batang Berwarna:** Setiap batang mewakili konfigurasi berbeda dengan warna berdasarkan np
+- **Label Detail:** Sumbu X menunjukkan ukuran data dalam MB dan jumlah proses
+- **Pola Menarik:** Durasi tidak selalu berkurang dengan ukuran data yang lebih kecil, menunjukkan trade-off kompleks
+
+**Interpretasi Keseluruhan:**
+1. **Trade-off Komunikasi-Komputasi:** Speedup optimal dicapai ketika pembagian workload seimbang dengan overhead komunikasi
+2. **Overhead Dominan:** Untuk data sangat kecil (np=6, 12.72 MB), overhead komunikasi mengurangi manfaat paralelisasi
+3. **Sweet Spot:** np=5 dengan 15.26 MB per proses memberikan balance terbaik
+
+### **Analisis Statistik**
+
+#### **1. Komunikasi Skalar:**
+- **Performa Serupa**: Kedua metode menunjukkan performa yang sangat mirip dengan rata-rata waktu hampir sama (MPI_Reduce: 0.352386s, Send-Receive: 0.351176s)
+- **Speedup Optimal**: MPI_Reduce mencapai speedup tertinggi 4.207x pada 6 proses
+- **Efisiensi**: MPI_Reduce menunjukkan efisiensi lebih baik (70.1% pada np=6) dibanding Send-Receive (60.5%)
+
+#### **2. Komunikasi Vektor:**
+- **Perbedaan Signifikan**: MPI_Reduce jauh lebih efisien (3.919x speedup) dibanding Send-Receive (2.025x)
+- **Overhead Komunikasi**: Send-Receive mengalami overhead besar karena mengirim seluruh vektor (76MB untuk np=1)
+- **Data Transfer**: MPI_Reduce hanya mengirim 8 byte per proses, sementara Send-Receive mengirim 15-76 MB
+
+#### **3. Pattern Speedup:**
+- **MPI_Reduce**: Speedup meningkat konsisten dengan penambahan proses (2.025x → 3.919x)
+- **Send-Receive**: Speedup maksimum pada np=5 (2.025x), menurun pada np=6 (1.532x) karena overhead komunikasi
+
+### **Kesimpulan**
+
+#### **1. Keunggulan MPI_Reduce:**
+- 52.49% lebih cepat daripada Send-Receive untuk komunikasi vektor
+- Overhead komunikasi minimal karena hanya mengirim hasil agregat
+- Efisiensi paralel yang lebih tinggi (65.3% vs 25.5% pada np=6)
+
+#### **2. Optimal Configuration:**
+- **Komunikasi Skalar**: MPI_Reduce dengan 6 proses (speedup 4.207x)
+- **Komunikasi Vektor**: MPI_Reduce dengan 6 proses (speedup 3.919x)
+- **Send-Receive Vector**: Optimal pada 5 proses (15.26 MB per proses)
+
+#### **3. Rekomendasi:**
+1. **Prioritaskan MPI_Reduce** untuk operasi reduksi
+2. **Hindari pengiriman data besar** dengan Send-Receive
+3. **Pertimbangkan trade-off** antara paralelisasi dan overhead komunikasi
+4. **Monitor ukuran data** per proses untuk optimasi load balancing
+
+### **Implikasi Praktis**
+Eksperimen menunjukkan bahwa **pemilihan metode komunikasi MPI sangat kritis untuk performa**. MPI_Reduce yang dioptimalkan untuk operasi kolektif memberikan speedup hingga 4.2x, sementara Send-Receive dengan transfer data besar membatasi speedup maksimal 2.0x. Visualisasi grafik memberikan insight mendalam tentang hubungan kompleks antara jumlah proses, ukuran data, dan overhead komunikasi, yang sangat penting untuk desain aplikasi MPI yang efisien.
