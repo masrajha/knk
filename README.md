@@ -720,6 +720,16 @@ Eksperimen berhasil menunjukkan prinsip dasar parallel computing menggunakan PTh
 
 ## **Tugas 6: Analisis Performa MPI untuk Program Integral**
 
+**Kode Program**
+
+| **Nama File** | **Deskripsi Singkat** |
+|---------------|----------------------|
+| [run_mpi_all.sh](./run_mpi_all.sh) | Skrip shell untuk otomatisasi benchmark MPI dengan berbagai jumlah proses |
+| [integral_mpi_vector.cpp](./integral_mpi_vector.cpp) | Kode sumber MPI untuk perhitungan integral dengan komunikasi vektor |
+| [integral_mpi.c](./integral_mpi.c) | Kode sumber MPI untuk perhitungan integral dengan komunikasi skalar |
+| [plot_mpi_result.py](./plot_mpi_result.py) | Skrip Python untuk visualisasi hasil benchmark MPI komunikasi skalar |
+| [plot_mpi_vector.py](./plot_mpi_vector.py) | Skrip Python untuk visualisasi hasil benchmark MPI komunikasi vektor |
+
 ### **Pendahuluan**
 Eksperimen ini bertujuan untuk menganalisis performa parallel computing menggunakan MPI (Message Passing Interface) pada program perhitungan integral numerik. Fokus eksperimen adalah membandingkan dua metode komunikasi dalam MPI: **MPI_Reduce** dan **Send-Receive**, baik dalam komunikasi data skalar maupun vektor. Eksperimen juga mengamati pengaruh jumlah proses terhadap waktu eksekusi, speedup, dan efisiensi.
 
