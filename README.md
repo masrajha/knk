@@ -6,7 +6,7 @@
 **Kelas:** B
 **Tanggal:** 6 Desember 2025
 
-## **SOAL 1: EKSPERIMEN KOMPLEKSITAS ALGORITMA O(log n), O(n), DAN O(n log n)**
+## **Tugas 1: EKSPERIMEN KOMPLEKSITAS ALGORITMA O(log n), O(n), DAN O(n log n)**
 ----------------------------------------------
 |Kode Program: [Tugas_1.ipynb](./Tugas_1.ipynb)|
 ----------------------------------------------
@@ -184,7 +184,10 @@ Eksperimen ini bertujuan untuk membandingkan performa dua algoritma dengan kompl
 2. Untuk operasi yang akan dijalankan berulang-ulang atau pada data besar, prioritaskan algoritma dengan kompleksitas lebih rendah meskipun faktor konstantanya lebih tinggi
 3. Lakukan pengujian empiris dengan data representatif untuk membuat keputusan yang tepat tentang pemilihan algoritma
 
-## **SOAL 2: EKSPERIMEN KODE PROGRAM REKURSIF DENGAN KOMPLEKSITAS O(n), O(n log n), DAN O(n²)**
+## **Tugas 2: EKSPERIMEN KODE PROGRAM REKURSIF DENGAN KOMPLEKSITAS O(n), O(n log n), DAN O(n²)**
+----------------------------------------------
+|Kode Program: [Tugas_2.ipynb](./Tugas_2.ipynb)|
+----------------------------------------------
 
 ### **Eksperimen 3: Algoritma Maximum Subarray Sum**
 
@@ -275,7 +278,10 @@ Eksperimen ini menganalisis tiga algoritma rekursif untuk menyelesaikan masalah 
 **Kesimpulan:**
 Eksperimen berhasil mendemonstrasikan perbedaan dramatis dalam waktu eksekusi antara tiga kelas kompleksitas algoritma. Hasil menunjukkan bahwa pemilihan algoritma yang tepat berdasarkan kompleksitas waktu memiliki dampak kritis pada performa aplikasi, terutama untuk dataset besar. Algoritma O(n) (Kadane rekursif) terbukti sebagai pilihan optimal untuk masalah Maximum Subarray Sum dalam semua skenario yang diuji.
 
-## **Soal 3.a: Analisis Kompleksitas Ruang untuk Merge Sort**
+## **Tugas 3.a: Analisis Kompleksitas Ruang untuk Merge Sort**
+----------------------------------------------
+|Kode Program  a dan b: [Tugas_3_KnK.ipynb](./Tugas_3_KnK.ipynb)|
+----------------------------------------------
 
 ### **Pendahuluan**
 Eksperimen ini bertujuan untuk menganalisis kompleksitas ruang (space complexity) dari algoritma Merge Sort dengan dua implementasi berbeda: versi efisien dengan kompleksitas O(n) dan versi tidak efisien dengan kompleksitas O(n²). Analisis dilakukan melalui pengukuran langsung penggunaan memori menggunakan library `tracemalloc` pada berbagai ukuran input.
@@ -346,12 +352,22 @@ Eksperimen ini bertujuan untuk menganalisis kompleksitas ruang (space complexity
 
 ---
 
-## **Soal 3.b: Analisis Kompleksitas Waktu Hiring Problem**
+## **Tugas 3.b: Analisis Kompleksitas Waktu Hiring Problem**
 
 ### **Pendahuluan**
 Eksperimen ini menganalisis kompleksitas waktu algoritma Hiring Problem dengan dua pendekatan: algoritma on-line O(c) dan algoritma brute-force O(n).
 
 ### **Hasil dan Analisis Visual**
+
+
+
+#### **Tabel Hasil Eksperimen**
+| N         | Avg Cost O(c) | Avg Cost O(n) | Avg Time O(c) (μs) | Avg Time O(n) (μs) | Time Ratio |
+|-----------|---------------|---------------|---------------------|---------------------|------------|
+| 1.000     | 6.40          | 6.400         | 51.94               | 491.05              | 9.45x      |
+| 10.000    | 11.60         | 116.000       | 244.63              | 5.658,75            | 23.13x     |
+| 100.000   | 12.00         | 1.200.000     | 2.853,06            | 80.217,96           | 28.12x     |
+| 1.000.000 | 12.60         | 12.600.000    | 31.261,30           | 825.525,92          | 26.41x     |
 
 #### **Grafik 1: Analisis Kompleksitas Utama**
 
@@ -368,14 +384,6 @@ Eksperimen ini menganalisis kompleksitas waktu algoritma Hiring Problem dengan d
 - Algoritma O(n) didominasi oleh operasi perbandingan
 - Algoritma O(c) memiliki overhead yang lebih rendah
 - Distribusi operasi sesuai dengan karakteristik algoritma
-
-#### **Tabel Hasil Eksperimen**
-| N         | Avg Cost O(c) | Avg Cost O(n) | Avg Time O(c) (μs) | Avg Time O(n) (μs) | Time Ratio |
-|-----------|---------------|---------------|---------------------|---------------------|------------|
-| 1.000     | 6.40          | 6.400         | 51.94               | 491.05              | 9.45x      |
-| 10.000    | 11.60         | 116.000       | 244.63              | 5.658,75            | 23.13x     |
-| 100.000   | 12.00         | 1.200.000     | 2.853,06            | 80.217,96           | 28.12x     |
-| 1.000.000 | 12.60         | 12.600.000    | 31.261,30           | 825.525,92          | 26.41x     |
 
 #### **Verifikasi dengan Bilangan Harmonik**
 | N         | Hires Aktual | Hₙ Teoritis | Accuracy |
@@ -394,3 +402,318 @@ Eksperimen ini menganalisis kompleksitas waktu algoritma Hiring Problem dengan d
 
 3. **Visualisasi** berhasil menunjukkan perbedaan dramatis dalam skala pertumbuhan waktu eksekusi.
 
+## **Tugas 4: Analisis Kompleksitas Waktu Bucket Sort vs Selection Sort**
+----------------------------------------------
+|Kode Program: [Tugas_4_KnK.ipynb](./tugas_4_knk.ipynb)|
+----------------------------------------------
+
+### **Pendahuluan**
+Eksperimen ini bertujuan untuk menganalisis dan membandingkan kompleksitas waktu dua algoritma pengurutan yang berbeda: **Bucket Sort** (diharapkan memiliki kompleksitas O(n)) dan **Selection Sort** (dengan kompleksitas O(n²)). Analisis dilakukan melalui pengukuran waktu eksekusi pada berbagai ukuran data untuk memverifikasi teori kompleksitas dan memahami perbedaan praktis dalam performa kedua algoritma.
+
+### **Skenario Eksperimen**
+1. **Algoritma yang Diuji:**
+   - **Bucket Sort**: Algoritma pengurutan berdasarkan digit dengan implementasi radix-like
+   - **Selection Sort**: Algoritma pengurutan dengan pendekatan brute-force
+
+2. **Ukuran Data:** n = [1000, 2000, 5000, 8000, 10000, 15000, 20000]
+
+3. **Metode Pengukuran:**
+   - Menggunakan `time.time()` untuk mengukur waktu eksekusi dalam mikrodetik (µs)
+   - Setiap ukuran diuji 5 kali untuk mendapatkan rata-rata
+   - Data di-generate secara acak dengan rentang 0-10000
+
+4. **Metode Analisis:**
+   - Analisis regresi linear dan kuadratik
+   - Analisis korelasi dengan model teoritis
+   - Visualisasi multi-skala (linier, log-log, semi-log)
+   - Perhitungan growth ratio dan statistik signifikansi
+
+### **Hasil Eksperimen**
+
+#### **Tabel Waktu Eksekusi**
+| Size  | Bucket Sort (µs) | Selection Sort (µs) | Speedup Factor |
+|-------|------------------|---------------------|----------------|
+| 1000  | 2098.66          | 114,658.31          | 54.6x          |
+| 2000  | 2714.49          | 527,784.44          | 194.4x         |
+| 5000  | 3649.57          | 910,472.92          | 249.5x         |
+| 8000  | 3735.59          | 1,851,968.19        | 495.8x         |
+| 10000 | 4998.16          | 2,774,106.31        | 555.0x         |
+| 15000 | 6633.14          | 6,243,080.04        | 941.4x         |
+| 20000 | 9628.73          | 11,596,153.88       | 1204.3x        |
+
+![Grafik Skala Linier](./sort_complexity_analysis.png)
+
+**Grafik 1: Actual Time Complexity (Linear Scale)**
+**Interpretasi:** Pada skala linier, terlihat perbedaan dramatis antara kedua algoritma. Bucket Sort menunjukkan pertumbuhan yang hampir linier, sementara Selection Sort menunjukkan pertumbuhan kuadratik yang sangat curam.
+
+**Grafik 2: Theoretical vs Actual Complexity (Linear Scale)**
+**Interpretasi:** Perbandingan antara data aktual (garis padat) dan prediksi teori (garis putus-putus). Bucket Sort mengikuti tren O(n) dengan baik, sedangkan Selection Sort mendekati tren O(n²) meskipun dengan konstanta yang berbeda.
+
+**Grafik 3: Actual Time Complexity (Log-Log Scale)**
+**Interpretasi:** Pada skala log-log, slope garis menunjukkan eksponen pertumbuhan:
+- Bucket Sort slope: 0.4552 (mendekati 0.5, lebih baik dari O(n))
+- Selection Sort slope: 1.4115 (mendekati 1.5, antara O(n) dan O(n²))
+
+**Grafik 4: Theoretical vs Actual Complexity (Log-Log Scale)**
+**Interpretasi:** Perbandingan log-log menunjukkan bahwa kedua algoritma memiliki pertumbuhan yang lebih lambat dari prediksi teori murni, kemungkinan karena optimasi Python dan faktor implementasi.
+
+#### **Analisis Statistik**
+1. **Bucket Sort:**
+   - Korelasi dengan O(n): 0.9800 (SANGAT KUAT)
+   - R² linear fit: 0.9604 (FIT SANGAT BAIK)
+   - p-value: 0.0001 (SANGAT SIGNIFIKAN)
+
+2. **Selection Sort:**
+   - Korelasi dengan O(n²): 0.9990 (SANGAT KUAT)
+   - R² quadratic fit: 0.9979 (FIT SANGAT BAIK)
+   - p-value: 0.0000 (SANGAT SIGNIFIKAN)
+
+#### **Growth Ratio Analysis**
+| Size  | Bucket Ratio | Selection Ratio | Teori O(n) | Teori O(n²) |
+|-------|--------------|-----------------|------------|-------------|
+| 2000  | 1.29         | 4.60            | 2.00       | 4.00        |
+| 5000  | 1.34         | 1.73            | 2.50       | 6.25        |
+| 8000  | 1.02         | 2.03            | 1.60       | 2.56        |
+| 10000 | 1.34         | 1.50            | 1.25       | 1.56        |
+| 15000 | 1.33         | 2.25            | 1.50       | 2.25        |
+| 20000 | 1.45         | 1.86            | 1.33       | 1.78        |
+
+**Interpretasi:** Selection Sort menunjukkan rasio pertumbuhan yang lebih tinggi dan lebih variabel sesuai karakteristik O(n²), sementara Bucket Sort menunjukkan rasio yang lebih stabil mendekati 1.
+
+### **Analisis Mendalam**
+
+#### **Bucket Sort: O(n) dengan Karakteristik Khusus**
+1. **Slope log-log 0.4552** menunjukkan performa lebih baik dari O(n) linear murni
+2. **Faktor-faktor yang mempengaruhi:**
+   - Implementasi menggunakan pendekatan radix-like
+   - Distribusi data yang seragam (0-10000)
+   - Overhead konstan yang signifikan pada n kecil
+3. **Pada n=20000**, waktu hanya 9628.73 µs (9.6 ms), sangat efisien
+
+#### **Selection Sort: O(n²) dengan Variasi**
+1. **Slope log-log 1.4115** menunjukkan kompleksitas antara O(n) dan O(n²)
+2. **Variansi tinggi** antar percobaan disebabkan oleh:
+   - Sifat algoritma yang sensitif terhadap posisi elemen
+   - Tidak ada optimasi untuk data yang sudah sebagian terurut
+3. **Pada n=20000**, waktu mencapai 11,596,153.88 µs (11.6 detik)
+
+#### **Perbandingan Performa**
+1. **Speedup meningkat secara eksponensial** dengan bertambahnya n:
+   - n=1000: 54.6x
+   - n=20000: 1204.3x
+2. **Poin breakeven teoritis** berada di bawah n=1000
+3. **Untuk data besar**, Bucket Sort lebih unggul secara signifikan
+
+### **Kesimpulan**
+
+#### **1. Validasi Teori Kompleksitas**
+- ✓ **Bucket Sort** menunjukkan karakteristik **mendekati O(n)** dengan korelasi 0.9800 dan R² 0.9604
+- ✓ **Selection Sort** menunjukkan karakteristik **mendekati O(n²)** dengan korelasi 0.9990 dan R² 0.9979
+- ✓ Hasil eksperimental **konsisten dengan prediksi teori** meskipun dengan konstanta yang berbeda
+
+#### **2. Perbedaan Performa Praktis**
+- **Bucket Sort 1204x lebih cepat** daripada Selection Sort pada n=20000
+- **Gap performa meningkat** secara signifikan dengan bertambahnya ukuran data
+- **Overhead Bucket Sort** pada n kecil relatif tinggi, tetapi menjadi tidak signifikan pada n besar
+
+#### **3. Implikasi Pemilihan Algoritma**
+1. **Untuk dataset kecil (n < 1000)**: Perbedaan tidak terlalu signifikan
+2. **Untuk dataset menengah (1000 < n < 10000)**: Bucket Sort mulai menunjukkan keunggulan
+3. **Untuk dataset besar (n > 10000)**: Bucket Sort sangat direkomendasikan
+
+#### **4. Faktor-faktor yang Mempengaruhi Hasil**
+1. **Implementasi spesifik** mempengaruhi konstanta kompleksitas
+2. **Karakteristik data** (distribusi, rentang) mempengaruhi performa Bucket Sort
+3. **Optimasi Python** dan overhead measurement mempengaruhi hasil absolut
+
+**Kesimpulan Utama:** Eksperimen berhasil memvalidasi teori kompleksitas waktu dan menunjukkan superioritas Bucket Sort untuk dataset besar, dengan speedup mencapai 1204x pada 20.000 elemen. Hasil visualisasi grafik memberikan pemahaman intuitif tentang perbedaan pola pertumbuhan kedua algoritma.
+
+## **Soal 5: Analisis Parallel Computing - Program Sum dengan PThread**
+
+**Kode Program:**
+
+| **File** | **Deskripsi Singkat** |
+|----------|----------------------|
+| [pthread1.c](./pthread1.c) | Kode sumber C++ untuk parallel summation menggunakan PThread, dicompile menjadi [program.exe](./program.exe) |
+| [run_benchmark_2.bat](./run_benchmark_2.bat) | Skrip batch untuk otomatisasi benchmark dengan berbagai konfigurasi ukuran data |
+| [plot_results2.py](./plot_results2.py) | Skrip Python untuk analisis data dan visualisasi hasil benchmark |
+
+
+### **Pendahuluan**
+Eksperimen ini bertujuan untuk menganalisis performa parallel computing menggunakan **PThread** pada program penjumlahan sederhana. Tujuan utama adalah mengukur **speedup** dan **efisiensi** yang dicapai dengan berbagai konfigurasi thread (2, 4, 5, 8 threads) pada berbagai ukuran masalah (1e6 hingga 1e9 elemen). Eksperimen ini juga membandingkan waktu eksekusi paralel dengan implementasi serial untuk memahami dampak parallelisasi terhadap performa.
+
+### **Skenario Eksperimen**
+
+#### **1. Algoritma dan Implementasi**
+```c
+// Struktur data untuk thread
+struct ThreadData {
+    int thread_id;
+    int num_thread;
+    unsigned long long num_sum;
+};
+
+// Fungsi thread untuk perhitungan parsial
+void *Sum(void *arg) {
+    // Setiap thread menghitung bagian dari total penjumlahan
+    // Range dibagi berdasarkan thread_id dan num_thread
+}
+
+// Fungsi serial untuk perbandingan
+unsigned long int serial_sum = 0;
+for (unsigned long int j=0; j< num_sum; j++) {
+    serial_sum += j;
+}
+```
+
+#### **2. Konfigurasi Eksperimen**
+- **Ukuran Data (n):** 1×10⁶, 1×10⁷, 1×10⁸, 1×10⁹ elemen
+- **Jumlah Thread:** 2, 4, 5, 8 threads
+- **Metode Pengukuran:** Menggunakan `std::chrono::high_resolution_clock` untuk presisi tinggi
+- **Repeat:** Setiap konfigurasi dijalankan satu kali (benchmark otomatis)
+- **Platform:** Windows dengan kompiler C++ dan PThread library
+
+#### **3. Metrik Analisis**
+- **Waktu Eksekusi (seconds):** Waktu paralel vs serial
+- **Speedup:** \( S = \frac{T_{\text{serial}}}{T_{\text{parallel}}} \)
+- **Efisiensi:** \( E = \frac{S}{P} \) dimana \( P \) adalah jumlah thread
+- **Scalability:** Kemampuan sistem meningkatkan speedup dengan penambahan thread
+
+### **Hasil Eksperimen**
+
+#### **Tabel 1: Data Hasil Pengukuran Waktu**
+| Size (n) | Threads | Parallel Time (s) | Serial Time (s) | Speedup | Efficiency |
+|----------|---------|-------------------|-----------------|---------|------------|
+| 1×10⁶    | 2       | 0.002602          | 0.002557        | 0.98x   | 49.0%      |
+| 1×10⁶    | 4       | 0.002038          | 0.002557        | 1.25x   | 31.4%      |
+| 1×10⁶    | 5       | 0.002150          | 0.002557        | 1.19x   | 23.8%      |
+| 1×10⁶    | 8       | 0.002502          | 0.002557        | 1.02x   | 12.8%      |
+| 1×10⁷    | 2       | 0.010500          | 0.018914        | 1.80x   | 90.0%      |
+| 1×10⁷    | 4       | 0.006014          | 0.018914        | 3.14x   | 78.6%      |
+| 1×10⁷    | 5       | 0.006335          | 0.018914        | 2.99x   | 59.7%      |
+| 1×10⁷    | 8       | 0.004258          | 0.018914        | 4.44x   | 55.5%      |
+| 1×10⁸    | 2       | 0.093388          | 0.188212        | 2.02x   | 100.9%     |
+| 1×10⁸    | 4       | 0.049046          | 0.188212        | 3.84x   | 95.9%      |
+| 1×10⁸    | 5       | 0.041026          | 0.188212        | 4.59x   | 91.8%      |
+| 1×10⁸    | 8       | 0.028539          | 0.188212        | 6.60x   | 82.4%      |
+| 1×10⁹    | 2       | 0.931595          | 1.834242        | 1.97x   | 98.4%      |
+| 1×10⁹    | 4       | 0.482186          | 1.834242        | 3.80x   | 95.1%      |
+| 1×10⁹    | 5       | 0.404660          | 1.834242        | 4.53x   | 90.7%      |
+| 1×10⁹    | 8       | 0.271232          | 1.834242        | 6.76x   | 84.5%      |
+
+![Comparison Time](comprehensive_analysis.png)
+
+**Grafik 1: Execution Time Comparison** 
+Grafik batang dengan skala logaritmik menunjukkan perbandingan waktu eksekusi untuk berbagai konfigurasi thread. Terlihat bahwa:
+- Waktu serial (merah) meningkat secara linear dengan ukuran masalah
+- Waktu paralel menurun dengan bertambahnya jumlah thread
+- Untuk ukuran kecil (1e6), overhead thread lebih signifikan daripada benefit paralelisasi
+
+**Grafik 2: Speedup vs Problem Size**
+Speedup meningkat dengan bertambahnya ukuran masalah. Untuk 8 threads:
+- n=1e6: Speedup hanya 1.02x (tidak efektif)
+- n=1e9: Speedup mencapai 6.76x (sangat efektif)
+
+**Grafik 3: Efficiency Analysis**
+Efisiensi menunjukkan seberapa efektif thread tambahan digunakan:
+- Efisiensi >90% untuk n ≥ 1e8 dengan 2-5 threads
+- Efisiensi menurun dengan penambahan thread karena overhead sinkronisasi
+- Efisiensi sempurna (100%) hampir tercapai untuk beberapa konfigurasi
+
+**Grafik 4: Heatmap Parallel Time**
+Heatmap menunjukkan pola yang jelas: waktu menurun dengan bertambahnya thread dan meningkat dengan bertambahnya ukuran. Area terpanas (waktu terlama) di kiri atas (thread sedikit, ukuran besar), terdingin di kanan bawah (banyak thread, ukuran kecil).
+
+**Grafik 5  dan 6: Actual vs Ideal Speedup**
+Perbandingan speedup aktual dengan speedup ideal (linear scaling). Untuk 8 threads:
+- Ideal: 8x speedup
+- Aktual maksimum: 6.76x (84.5% dari ideal)
+- Gap disebabkan oleh overhead komunikasi dan sinkronisasi
+
+![Grafik Bar Chart](./simple_bar_charts.png)
+
+**Subplot 1: Parallel vs Serial Time** - Skala logaritmik menunjukkan gap semakin lebar antara waktu paralel (biru) dan serial (merah) seiring bertambahnya thread dan ukuran data. Untuk 1e6, paralel kadang lebih lambat (overhead > benefit).
+
+**Subplot 2: Speedup Achieved** - Speedup diklasifikasikan hijau (≥1) dan oranye (<1). Hanya 2_1e+6 yang speedup <1 (0.98x). Speedup meningkat dramatis dengan ukuran data: 1e+7 (1.80-4.44x), 1e+8 (2.02-6.60x), 1e+9 (1.97-6.76x). Konfigurasi 8 threads konsisten terbaik kecuali untuk 1e+6.
+
+
+![Grafik Perbandingan Thread](./thread_comparison.png)
+
+**Subplot 1: Parallel Time by Thread Count** - Semua garis memiliki slope sama (~1 dalam skala log-log), mengkonfirmasi kompleksitas tetap O(n). Paralelisasi hanya mengurangi konstanta. Garis-garis konvergen untuk data kecil (overhead dominan) dan divergen untuk data besar.
+
+**Subplot 2: Speedup by Thread Count** - Gap antara aktual dan ideal meningkat dengan jumlah thread: 2 threads (efisiensi ~100%), 8 threads (aktual 6.76x vs ideal 8.0x). Semua garis meningkat dengan ukuran data dan mulai mendatar mendekati limit.
+
+### **Analisis Mendalam**
+
+#### **1. Amdahl's Law vs Gustafson's Law**
+- **Untuk n kecil:** Mengikuti **Amdahl's Law** - bagian serial membatasi speedup maksimal
+- **Untuk n besar:** Mengikuti **Gustafson's Law** - speedup dapat mendekati linear dengan workload yang cukup besar
+
+#### **2. Overhead Parallelisasi**
+**Overhead utama yang diamati:**
+1. **Thread Creation & Joining:** Waktu untuk membuat dan menggabungkan thread
+2. **Load Imbalance:** Pembagian workload tidak selalu merata karena `floor(num_sum/num_thread)`
+3. **Memory Access Contention:** Kemungkinan contention pada cache/shared memory
+
+#### **3. Scalability Analysis**
+**Strong Scaling (fixed problem size):**
+- n=1e9: Speedup dari 1.97x (2 threads) ke 6.76x (8 threads) - scalability baik
+- Efisiensi turun dari 98.4% ke 84.5% - masih acceptable
+
+**Weak Scaling (fixed workload per thread):**
+- Dengan 8 threads, workload 1e9 memberikan speedup 6.76x
+- Ideal weak scaling: speedup konstan = 8x
+
+#### **4. Anomali pada n=1e6**
+Speedup <1 untuk 2 threads (0.98x) menunjukkan **overhead melebihi benefit**. Penyebab:
+- Workload per thread terlalu kecil (500,000 operasi)
+- Overhead thread management > waktu komputasi
+- False sharing atau cache issues
+
+#### **5. Optimal Thread Count**
+Berdasarkan data, **thread optimal bergantung pada ukuran masalah**:
+- n ≤ 1e6: 1 thread (serial lebih baik)
+- 1e6 < n ≤ 1e7: 4-8 threads
+- n ≥ 1e8: 8 threads memberikan speedup terbaik
+
+### **Kesimpulan**
+
+#### **1. Validasi Teori Parallel Computing**
+✓ **Speedup tercapai** untuk workload yang cukup besar (n ≥ 1e7)
+✓ **Efisiensi tinggi** (>80%) untuk n ≥ 1e8
+✓ **Scalability baik** dengan peningkatan thread count
+✓ **Overhead signifikan** untuk workload kecil membatasi efektivitas paralelisasi
+
+#### **2. Performance Summary**
+- **Speedup maksimum:** 6.76x dengan 8 threads pada n=1e9
+- **Efisiensi tertinggi:** 100.9% (super-linear speedup) untuk 2 threads pada n=1e8
+- **Konfigurasi optimal:** 8 threads untuk n ≥ 1e8
+- **Break-even point:** Paralelisasi mulai efektif pada n ≈ 1e7
+
+#### **3. Rekomendasi Implementasi**
+1. **Gunakan threshold workload** untuk memutuskan paralelisasi
+   - Jika n < 1e6: gunakan serial execution
+   - Jika n ≥ 1e7: gunakan paralelisasi dengan 4-8 threads
+
+2. **Optimasi pembagian workload:**
+   ```c
+   // Current: menggunakan floor() yang mungkin menyebabkan imbalance
+   unsigned long int range = floor(num_sum/num_thread);
+   
+   // Suggested: distribusi lebih merata
+   unsigned long int range = num_sum / num_thread;
+   unsigned long int remainder = num_sum % num_thread;
+   // Tambahkan remainder ke beberapa thread pertama
+   ```
+
+3. **Pertimbangkan cache awareness:**
+   - False sharing dapat dikurangi dengan padding atau alignment
+   - Memory access pattern yang lebih friendly untuk cache
+
+#### **4. Keterbatasan Eksperimen**
+1. **Single run per configuration** - variabilitas tidak diukur
+2. **Specific hardware** - hasil mungkin berbeda di CPU dengan core count berbeda
+3. **Simple summation** - workload komputasi terlalu sederhana
+4. **No memory allocation** - hanya operasi arithmetic murni
+
+### **Kesimpulan**
+Eksperimen berhasil menunjukkan prinsip dasar parallel computing menggunakan PThread. **Paralelisasi efektif ketika workload cukup besar untuk mengatasi overhead thread management**. Untuk aplikasi nyata, perlu dipertimbangkan trade-off antara kompleksitas implementasi, maintainability code, dan gain performance yang diharapkan. Implementasi paralel sederhana seperti penjumlahan dapat mencapai speedup hingga 6.76x dengan 8 threads, mendekati 84.5% dari ideal scaling.

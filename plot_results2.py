@@ -92,7 +92,7 @@ def read_and_process_data(filename):
     
     return df_long
 
-def create_comprehensive_plots(df):
+def create_comprehensive_plots(df, save_path='comprehensive_plots.png'):
     """Membuat visualisasi komprehensif dari data benchmark"""
     
     # Filter out invalid data (speedup = 0 atau NaN)
@@ -297,9 +297,12 @@ def create_comprehensive_plots(df):
     ax6.tick_params(axis='x', rotation=45)
     
     plt.tight_layout()
+    
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    print(f"\n✓ Grafik disimpan ke: {save_path}")
     return fig
 
-def create_simple_bar_charts(df):
+def create_simple_bar_charts(df, save_path='simple_bar_charts.png'):
     """Membuat grafik batang sederhana"""
     # Filter out invalid data
     plot_df = df[(df['speedup'] > 0) & (~pd.isna(df['speedup']))].copy()
@@ -361,9 +364,12 @@ def create_simple_bar_charts(df):
                 f'{height:.2f}', ha='center', va='bottom', fontsize=8)
     
     plt.tight_layout()
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    print(f"\n✓ Grafik disimpan ke: {save_path}")
+    
     return fig
 
-def create_thread_comparison_plots(df):
+def create_thread_comparison_plots(df, save_path='thread_comparison.png'):
     """Membuat plot perbandingan berdasarkan thread count"""
     # Filter out invalid data
     plot_df = df[(df['speedup'] > 0) & (~pd.isna(df['speedup']))].copy()
@@ -435,6 +441,9 @@ def create_thread_comparison_plots(df):
     ax2.tick_params(axis='x', rotation=45)
     
     plt.tight_layout()
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    print(f"\n✓ Grafik disimpan ke: {save_path}")
+    
     return fig
 
 def save_cleaned_data(df, filename='cleaned_results.csv'):
